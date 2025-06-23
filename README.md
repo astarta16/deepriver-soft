@@ -1,16 +1,81 @@
-# test
+# Live Betting App
 
-A new Flutter project.
+This Flutter mobile application simulates a real-time sports betting dashboard with **10,000+ live matches**, odds updates, animations, and local state persistence.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## Architecture
 
-A few resources to get you started if this is your first Flutter project:
+- **Flutter**: Latest stable version used for modern features and wide device compatibility.
+- **State Management**: `flutter_bloc` is used for event-driven, predictable state transitions.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## UI Structure
+
+- **LiveMatchScreen** – Main screen rendering the filtered list of matches.
+- **MatchCard** – Visual representation of each match and its odds.
+- **SportFilterBar** – Horizontal filter bar to select sport type.
+
+---
+
+## Model
+
+- `LiveMatch`: Data class representing a match, score, odds, and metadata.
+
+---
+
+## WebSocket Simulation
+
+- `MockWebSocketService`: Generates random odds updates at a predefined interval using `Timer`.
+
+---
+
+## Key Decisions & Optimizations
+
+### Why BLoC?
+- Clear separation of UI and business logic
+- Fine-grained control over UI updates
+- Scalable and easily testable structure
+
+### Performance
+- Uses `ListView.builder` to efficiently render 10,000+ items
+- Only updates the UI for affected matches
+- Odds changes are highlighted temporarily (1 second) with color transitions
+
+### Persistence
+- `SharedPreferences` stores selected odds across app restarts
+- Restores saved state during `MatchBloc` initialization
+
+---
+
+## 🎲 Odds Simulation (Mock WebSocket)
+
+Every 2 seconds, a random match is picked and one or more of its odds are either increased or decreased slightly.
+
+- 🟢 Green = odds increased  
+- 🔴 Red = odds decreased  
+- Highlight effect lasts for 1 second
+
+### 💡 Testing Tip
+
+By default, updates affect all matches.  
+To **limit updates to a few visible matches**, go to `mock_websocket_service.dart` and:
+
+```dart
+// Uncomment this line to simulate only 5 matches
+final matchIndex = _rand.nextInt(5);
+
+// Comment this line if above is enabled
+final matchIndex = _rand.nextInt(totalMatches);
+
+
+
+🛠 How to Run:
+Clone the repository
+run the command to get every package: flutter pub get
+flutter run
+
+Tested on Android API 24+ (7.0 to 16) using both emulator and physical devices.
+
+
