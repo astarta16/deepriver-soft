@@ -57,6 +57,13 @@ Every 2 seconds, a random match is picked and one or more of its odds are either
 - 🔴 Red = odds decreased  
 - Highlight effect lasts for 1 second
 
+
+### 🛠 How to Run:
+Clone the repository
+Run the following commands in your terminal:
+- flutter pub get
+- flutter run
+
 ### 💡 Testing Tip
 
 By default, updates affect all matches.  
@@ -68,6 +75,8 @@ final matchIndex = _rand.nextInt(5);
 
 // Comment this line if above is enabled
 final matchIndex = _rand.nextInt(totalMatches);
+
+
 
 
 
