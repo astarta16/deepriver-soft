@@ -71,11 +71,3 @@ final matchIndex = _rand.nextInt(totalMatches);
 
 
 
-🛠 How to Run:
-Clone the repository
-run the command to get every package: flutter pub get
-flutter run
-
-Tested on Android API 24+ (7.0 to 16) using both emulator and physical devices.
-
-
