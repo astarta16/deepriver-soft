@@ -19,7 +19,10 @@ void main() async {
   matchBloc.add(LoadMatches());
 
   final websocket = MockWebSocketService(matchBloc: matchBloc);
-  websocket.start();
+  Future.delayed(Duration(seconds: 1), () {
+    debugPrint('⏳ Starting WebSocket after delay');
+    websocket.start();
+  });
 
   runApp(MyApp(matchBloc: matchBloc));
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class SportFilterBar extends StatelessWidget {
@@ -22,7 +21,8 @@ class SportFilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: const Color(0xFF1A1A2F),
       height: 50,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
@@ -35,18 +35,24 @@ class SportFilterBar extends StatelessWidget {
 
           return GestureDetector(
             onTap: () => onSportSelected(sport),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
-                color: isSelected ? Colors.deepPurple : Colors.grey[300],
+                color: isSelected ? Colors.amber[700] : const Color(0xFF2A2A3D),
                 borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: isSelected ? Colors.amber : Colors.grey.shade700,
+                  width: 1.2,
+                ),
               ),
               child: Center(
                 child: Text(
                   sport,
                   style: TextStyle(
-                    color: isSelected ? Colors.white : Colors.black87,
-                    fontWeight: FontWeight.w500,
+                    color: isSelected ? Colors.black : Colors.white70,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
                   ),
                 ),
               ),

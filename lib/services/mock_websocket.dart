@@ -1,6 +1,7 @@
-
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter/widgets.dart';
+
 import '../blocs/match_bloc.dart';
 import '../blocs/match_event.dart';
 
@@ -16,9 +17,14 @@ class MockWebSocketService {
       final totalMatches = matchBloc.state.matches.length;
       if (totalMatches == 0) return;
 
-      final matchIndex = _rand.nextInt(totalMatches);
-      final match = matchBloc.state.matches[matchIndex];
+      // FOR TESTING PURPOSES ONLY:
+      // Uncomment this line to simulate changes only in first 5 visible matches just to see it is working.
+      // final matchIndex = _rand.nextInt(5);
 
+      // 👇Randomly updates any match from the full list.
+      final matchIndex = _rand.nextInt(totalMatches);
+
+      final match = matchBloc.state.matches[matchIndex];
       final updatedOdds = <String, double>{};
 
       match.odds.forEach((key, value) {
@@ -34,7 +40,7 @@ class MockWebSocketService {
 
       if (updatedOdds.isNotEmpty) {
         matchBloc.add(UpdateOdds(matchId: match.id, newOdds: updatedOdds));
-        print('🟢 Odds updated for Match ${match.id}: $updatedOdds');
+        debugPrint('🟢 Odds updated for Match ${match.id}: $updatedOdds');
       }
     });
   }

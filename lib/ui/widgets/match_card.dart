@@ -36,24 +36,29 @@ class MatchCard extends StatelessWidget {
         final selected = state.selectedOdds[match.id];
         final matchHighlights = state.highlightedOdds[match.id] ?? {};
 
-        debugPrint('💡 Match ID: ${match.id}');
-        debugPrint('➡️ Selected: $selected, Highlights: $matchHighlights');
-
         return Card(
+          color: const Color(0xFF1E1E2E),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(14),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Icon(_sportIcon(match.sport), color: Colors.deepPurple),
+                    Icon(_sportIcon(match.sport), color: Colors.amberAccent),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         '${match.teamA} vs ${match.teamB}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     Text(
@@ -62,9 +67,12 @@ class MatchCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                Text('Score: ${match.scoreA} - ${match.scoreB}'),
-                const SizedBox(height: 8),
+                const SizedBox(height: 10),
+                Text(
+                  'Score: ${match.scoreA} - ${match.scoreB}',
+                  style: const TextStyle(fontSize: 14, color: Colors.white70),
+                ),
+                const SizedBox(height: 12),
                 Row(
                   children:
                       match.odds.entries.map((entry) {
@@ -73,26 +81,19 @@ class MatchCard extends StatelessWidget {
                         final isSelected = selected == betType;
                         final highlight = matchHighlights[betType];
 
-                        debugPrint(
-                          '🎯 Match ${match.id}, Bet=$betType, Odds=$oddsValue, Selected=$isSelected, Highlight=$highlight',
-                        );
-
                         Color? backgroundColor;
                         if (isSelected) {
-                          backgroundColor = Colors.deepPurple;
+                          backgroundColor = const Color(0xFF394867);
                         } else if (highlight == 'up') {
-                          backgroundColor = Colors.green[100];
+                          backgroundColor = const Color(0xFF1F3F2E);
                         } else if (highlight == 'down') {
-                          backgroundColor = Colors.red[100];
+                          backgroundColor = const Color(0xFF3A1F1F);
                         } else {
-                          backgroundColor = Colors.grey[200];
+                          backgroundColor = const Color(0xFF2A2A3D);
                         }
 
                         return GestureDetector(
                           onTap: () {
-                            debugPrint(
-                              '🟣 Tapped: Match=${match.id}, Bet=$betType',
-                            );
                             bloc.add(
                               SelectOdd(matchId: match.id, betType: betType),
                             );
@@ -102,11 +103,18 @@ class MatchCard extends StatelessWidget {
                             margin: const EdgeInsets.only(right: 10),
                             padding: const EdgeInsets.symmetric(
                               horizontal: 12,
-                              vertical: 8,
+                              vertical: 10,
                             ),
                             decoration: BoxDecoration(
                               color: backgroundColor,
                               borderRadius: BorderRadius.circular(10),
+                              border:
+                                  isSelected
+                                      ? Border.all(
+                                        color: Colors.amber,
+                                        width: 1.2,
+                                      )
+                                      : null,
                             ),
                             child: Column(
                               children: [
@@ -115,9 +123,10 @@ class MatchCard extends StatelessWidget {
                                   style: TextStyle(
                                     color:
                                         isSelected
-                                            ? Colors.white
-                                            : Colors.black87,
-                                    fontWeight: FontWeight.bold,
+                                            ? Colors.amber
+                                            : Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
                                   ),
                                 ),
                                 Text(
@@ -125,19 +134,24 @@ class MatchCard extends StatelessWidget {
                                   style: TextStyle(
                                     color:
                                         isSelected
-                                            ? Colors.white
-                                            : Colors.black87,
+                                            ? Colors.amber
+                                            : Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 if (highlight != null)
-                                  Text(
-                                    highlight == 'up' ? '↑' : '↓',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color:
-                                          highlight == 'up'
-                                              ? Colors.green
-                                              : Colors.red,
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 4.0),
+                                    child: Text(
+                                      highlight == 'up' ? '↑' : '↓',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color:
+                                            highlight == 'up'
+                                                ? Colors.greenAccent
+                                                : Colors.redAccent,
+                                      ),
                                     ),
                                   ),
                               ],
@@ -145,11 +159,6 @@ class MatchCard extends StatelessWidget {
                           ),
                         );
                       }).toList(),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '⏱ Last build: ${DateTime.now().toIso8601String().substring(11, 19)}',
-                  style: const TextStyle(fontSize: 10, color: Colors.grey),
                 ),
               ],
             ),

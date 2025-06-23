@@ -18,9 +18,14 @@ class _LiveMatchScreenState extends State<LiveMatchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
-        title: const Text('Live Matches'),
-        backgroundColor: Colors.deepPurple,
+        title: const Text(
+          'Live Matches',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF1F1F2E),
+        elevation: 0,
       ),
       body: Column(
         children: [
